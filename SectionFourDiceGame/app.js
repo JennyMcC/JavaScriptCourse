@@ -54,7 +54,35 @@ document.querySelector('.btn-roll').addEventListener('click', function() {
 		document.querySelector('#current-' + activePlayer).textContent = roundScore;
 	} else {
 		//next player
-		//WAT. This is the same as writing If, Then(?), Else(:)
+		nextPlayer();
+	}
+});
+
+//adding the Global Score (top portion) when user clicks Hold button:
+document.querySelector('.btn-hold').addEventListener('click', function() {
+	//1. Add CURRENT score to GLOBAL score
+	scores[activePlayer] += roundScore;
+	//same as: scores[activePlayer] = scores[activePlayer] + roundScore;
+
+	//2. Update the UI
+	document.querySelector('#score-' + activePlayer).textContent = scores[activePlayer];
+
+	//3. Check if player won the game
+	if (scores[activePlayer] >= 100) {
+		document.querySelector('#name-' + activePlayer).textContent = "Winner!";
+		document.querySelector('.dice').style.display = 'none';
+		document.querySelector('.player-' + activePlayer + '-panel').classList.add('winner'); //winner and active ref CSS styling
+		document.querySelector('.player-' + activePlayer + '-panel').classList.remove('active');
+	} else {
+		nextPlayer();
+	}
+
+	//4. Next Player
+	nextPlayer();
+});
+
+function nextPlayer() {
+	//WAT. This is the same as writing If, Then(?), Else(:)
 		activePlayer === 0 ? activePlayer = 1 : activePlayer = 0;
 		roundScore = 0; //setting the new player to start at 0
 		//changing the users score back to a zero when they roll one:
@@ -66,10 +94,8 @@ document.querySelector('.btn-roll').addEventListener('click', function() {
 		document.querySelector('.player-1-panel').classList.toggle('active');
 		//hiding the dice again if the player rolls a 1
 		document.querySelector('.dice').style.display = 'none';
-	}
+}
 
-
-});
 
 
 

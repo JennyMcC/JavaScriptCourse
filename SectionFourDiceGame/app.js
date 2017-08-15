@@ -13,7 +13,7 @@ var scores, roundScore, activePlayer;
 
 scores = [0, 0];
 roundScore = 0;
-activePlayer = 1;
+activePlayer = 0;
 
 //'current-' refrences html where the current score is located; we don't include the 0 or 1 and instead add in the 'activePlayer' so it will add to the active players score
 //document.querySelector('#current-' + activePlayer).textContent = dice;
@@ -47,6 +47,28 @@ document.querySelector('.btn-roll').addEventListener('click', function() {
 	diceDOM.src = 'dice-' + dice + '.png';
 	
 	//3. Update the round score IF the rolled number was NOT a 1:
+	if (dice !== 1) {
+		//add score
+		roundScore += dice;
+		//display the new round score:
+		document.querySelector('#current-' + activePlayer).textContent = roundScore;
+	} else {
+		//next player
+		//WAT. This is the same as writing If, Then(?), Else(:)
+		activePlayer === 0 ? activePlayer = 1 : activePlayer = 0;
+		roundScore = 0; //setting the new player to start at 0
+		//changing the users score back to a zero when they roll one:
+		document.getElementById('current-0').textContent = '0';
+		document.getElementById('current-1').textContent = '0';
+		//removing and adding(toggle will either remove or add) the red dot next to the players name(showing who's turn it is)
+		//calling on an html class 'player-0-panel active'
+		document.querySelector('.player-0-panel').classList.toggle('active');
+		document.querySelector('.player-1-panel').classList.toggle('active');
+		//hiding the dice again if the player rolls a 1
+		document.querySelector('.dice').style.display = 'none';
+	}
+
+
 });
 
 

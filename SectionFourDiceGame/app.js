@@ -11,24 +11,7 @@ GAME RULES:
 
 var scores, roundScore, activePlayer;
 
-scores = [0, 0];
-roundScore = 0;
-activePlayer = 0;
-
-//'current-' refrences html where the current score is located; we don't include the 0 or 1 and instead add in the 'activePlayer' so it will add to the active players score
-//document.querySelector('#current-' + activePlayer).textContent = dice;
-//<em> is just italicizing the current score. Must add innerHTML so it doesn't simply print <em>dice</em>
-//document.querySelector('#current-' + activePlayer).innerHTML = '<em>' + dice + '</em>'
-//var x = document.querySelector('#score-0').textContent;
-
-//changing the css to hide the dice when you first load the page(bc we haven't rolled yet)
-document.querySelector('.dice').style.display = 'none';
-
-//score and current are the id's in html. do not need to use # to call on them.
-document.getElementById('score-0').textContent = '0';
-document.getElementById('score-1').textContent = '0';
-document.getElementById('current-0').textContent = '0';
-document.getElementById('current-1').textContent = '0';
+init();
 
 //telling the 'roll dice' button what to do when clicked..'add Event' needs what event(click), followed by the function to be called upon clicking:
 //OR you can put the entire function directly after 'click', if you're only using it here (this way, the function doesn't need to be named. just 'function()':
@@ -95,10 +78,39 @@ function nextPlayer() {
 		//hiding the dice again if the player rolls a 1
 		document.querySelector('.dice').style.display = 'none';
 }
+//resetting the game when they click the 'new game' button:
+document.querySelector('.btn-new').addEventListener('click', init);
+//function that starts/resets the game:
+function init() {
+	scores = [0, 0];
+	activePlayer = 0;
+	roundScore = 0;
 
+	//'current-' refrences html where the current score is located; we don't include the 0 or 1 and instead add in the 'activePlayer' so it will add to the active players score
+	//document.querySelector('#current-' + activePlayer).textContent = dice;
+	//<em> is just italicizing the current score. Must add innerHTML so it doesn't simply print <em>dice</em>
+	//document.querySelector('#current-' + activePlayer).innerHTML = '<em>' + dice + '</em>'
+	//var x = document.querySelector('#score-0').textContent;
 
+	//changing the css to hide the dice when you first load the page(bc we haven't rolled yet)
+	document.querySelector('.dice').style.display = 'none';
 
+	//score and current are the id's in html. do not need to use # to call on them.
+	document.getElementById('score-0').textContent = '0';
+	document.getElementById('score-1').textContent = '0';
+	document.getElementById('current-0').textContent = '0';
+	document.getElementById('current-1').textContent = '0';
+	document.getElementById('name-0').textContent = "Player 1";
+	document.getElementById('name-1').textContent = "Player 2";
+	//the # is only used when using 'querySelector', if you choose to use 'getElementById' then you don't need it
 
+	//clearing all the 'winner' and 'active player' things to start the game over. (then adding one active player back bc player 0 will start)
+	document.querySelector('.player-0-panel').classList.remove('winner');
+	document.querySelector('.player-1-panel').classList.remove('winner');
+	document.querySelector('.player-0-panel').classList.remove('active');
+	document.querySelector('.player-1-panel').classList.remove('active');
+	document.querySelector('.player-0-panel').classList.add('active');
+}
 
 
 

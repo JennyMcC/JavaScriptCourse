@@ -12,17 +12,32 @@ document.querySelector('.btn-roll').addEventListener('click', function() {
 	if (gamePlaying) {
 		//1. Random number:
 		//floor rounds the random number down; *6 so we get numbers 0-6; +1 so we get numbers 1-6.
-		var dice = Math.floor(Math.random() * 6) + 1;
+		var dice1 = Math.floor(Math.random() * 6) + 1;
+		var dice2 = Math.floor(Math.random() * 6) + 1;
 	
 		//2. Display result:
 		//changing the css back to show the dice since it has been rolled now
 		//making it a var called diceDOM so we can call on it for whichever number is rolled:
-		var diceDOM = document.querySelector('.dice');
-		diceDOM.style.display = 'block';
+		document.getElementById('dice-1').style.display = 'block';
+		document.getElementById('dice-2').style.display = 'block';
+		
 		//images are called 'dice-(whatever number)'. This is how we can tell it to show whatever number is rolled ('+ dice') bc we called the random number 'dice' above
-		diceDOM.src = 'dice-' + dice + '.png';
+		document.getElementById('dice-1').src = 'dice-' + dice1 + '.png';
+		document.getElementById('dice-2').src = 'dice-' + dice2 + '.png';
 	
 			//3. Update the round score IF the rolled number was NOT a 1:
+			if (dice1 !== 1 && dice2 !== 1) {
+				//add score
+				roundScore += dice1 + dice2;
+				//display the new round score:
+				document.querySelector('#current-' + activePlayer).textContent = roundScore;
+			} else {
+				//next player
+				nextPlayer();
+			}
+
+
+			/* OR USE THIS
 			if (dice === 6 && lastDice === 6) {
 				//player looses score
 				scores[activePlayer] = 0;
@@ -39,6 +54,7 @@ document.querySelector('.btn-roll').addEventListener('click', function() {
 			}
 
 			lastDice = dice;
+			*/
 	}
 });
 
@@ -66,7 +82,8 @@ document.querySelector('.btn-hold').addEventListener('click', function() {
 		//3. Check if player won the game
 		if (scores[activePlayer] >= winningScore) {
 			document.querySelector('#name-' + activePlayer).textContent = "Winner!";
-			document.querySelector('.dice').style.display = 'none';
+			document.getElementById('dice-1').style.display = 'none';
+			document.getElementById('dice-2').style.display = 'none';
 			document.querySelector('.player-' + activePlayer + '-panel').classList.add('winner'); //winner and active ref CSS styling
 			document.querySelector('.player-' + activePlayer + '-panel').classList.remove('active');
 			gamePlaying = false;
@@ -88,7 +105,8 @@ function nextPlayer() {
 	document.querySelector('.player-0-panel').classList.toggle('active');
 	document.querySelector('.player-1-panel').classList.toggle('active');
 	//hiding the dice again if the player rolls a 1
-	document.querySelector('.dice').style.display = 'none';
+	document.getElementById('dice-1').style.display = 'none';
+	document.getElementById('dice-2').style.display = 'none';
 }
 
 //resetting the game when they click the 'new game' button:
@@ -108,7 +126,8 @@ function init() {
 	//var x = document.querySelector('#score-0').textContent;
 
 	//changing the css to hide the dice when you first load the page(bc we haven't rolled yet)
-	document.querySelector('.dice').style.display = 'none';
+	document.getElementById('dice-1').style.display = 'none';
+	document.getElementById('dice-2').style.display = 'none';
 
 	//score and current are the id's in html. do not need to use # to call on them.
 	document.getElementById('score-0').textContent = '0';

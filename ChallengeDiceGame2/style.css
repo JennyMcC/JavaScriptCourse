@@ -152,13 +152,6 @@ i {
 .winner { background-color: #f7f7f7; }
 .winner .player-name { font-weight: 300; color: #EB4D4D; }
 
-.highScore {
-    position: absolute;
-    width: 200px;
-    left: 43%;
-    top: 500px;
-}
-
 .final-score {
     position: absolute;
     left: 50%;
@@ -176,3 +169,12 @@ i {
 .final-score:focus {
     outline: none;
 }
+
+#dice-1 {
+    top: 120px;
+}
+
+#dice-2 {
+    top: 250px;
+}
+

@@ -92,7 +92,7 @@ function change(a, b) {
 
 change(age, obj);
 
-console.log(age);  // prints 30 be age is a primative and can't be changed
+console.log(age);  // prints 21 bc age is a primative and can't be changed
 console.log(obj.city);  // prints Eaton bc it's inside the object
 
 

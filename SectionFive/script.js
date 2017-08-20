@@ -60,7 +60,7 @@ var jimmy = Object.create(personProto, {
 
 /////////////////////////////////////////
 // Primatives vs Objects
-
+/*
 // Primatives
 var a = 23;
 var b = a;
@@ -94,6 +94,52 @@ change(age, obj);
 
 console.log(age);  // prints 21 bc age is a primative and can't be changed
 console.log(obj.city);  // prints Eaton bc it's inside the object
+*/
+
+
+
+
+/////////////////////////////////////////
+//  Lecture: Passing Functions as arguments
+
+var years = [1990, 1965, 1937, 2005, 1998];
+
+function arrayCalc(arr, fn) {
+	var arrRes = [];
+	for (var i = 0; i < arr.length; i++) {
+		arrRes.push(fn(arr[i]));
+	}
+	return arrRes;
+}
+
+function calculateAge(el) {
+	return 2017 - el;
+}
+
+function isFullAge(el) {
+	return el >= 18;
+}
+
+function maxHeartRate(el) {
+	if (el >= 18 && el <= 81) {
+		return Math.round(206.9 - (0.67 * el)); //math.round will simply round the answer to the problem
+	} else {
+		return -1;
+	}
+}
+
+// Putting it all together: (could use different arrays and functions here)
+var ages = arrayCalc(years, calculateAge);
+var fullAges = arrayCalc(ages, isFullAge);
+var rates = arrayCalc(ages, maxHeartRate);
+
+console.log(ages);
+console.log(fullAges);
+console.log(rates);
+
+
+
+
 
 
 

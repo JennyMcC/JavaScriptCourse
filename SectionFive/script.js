@@ -143,7 +143,7 @@ console.log(rates);
 
 ////////////////////////////////////////////////////
 // Lecture: Functions returning Functions
-
+/*
 function interviewQuestion(job) {
 	if (job === 'designer') {
 		return function(name) { // name is the actual name of the person
@@ -152,6 +152,10 @@ function interviewQuestion(job) {
 	} else if (job === 'teacher') {
 		return function(name) {
 			console.log('What subject do you teach, ' + name + '?');
+		}
+	} else if (job === 'recruiter') {
+		return function(name) {
+			console.log(name + ', what area do you specialize in?');
 		}
 	} else {
 		return function(name) {
@@ -168,7 +172,39 @@ designerQuestion('Katie');
 designerQuestion('Jenny');
 
 interviewQuestion('teacher')('Molly'); //another way to do it
+interviewQuestion('recruiter')('Nick');
 interviewQuestion()('Jimmy'); //for the 'else' response
+*/
+
+
+
+
+////////////////////////////////////////////////////
+// Lecture: IIFE (Immediately Invoked Function Expression)
+/*
+//a stupid game where if your random number is >= 5, you win:
+function game() {
+	var score = Math.random() * 10; //between 1 and 10
+	console.log(score >= 5);
+}
+game();
+*/
+
+//must be in () to be treated as an expression
+(function () {
+	var score = Math.random() * 10;
+	console.log(score >= 5);
+})(); //'();' invokes the nameless function above
+
+//console.log(score);
+
+//this stupid game subtracts a 'goodLuck' number to make winning harder? this game is real stupid
+(function (goodLuck) {
+	var score = Math.random() * 10;
+	console.log(score >= 5 - goodLuck);
+})(10); //10 = goodLuck
+//can only use this one time.
+
 
 
 

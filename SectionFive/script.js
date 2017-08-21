@@ -101,7 +101,7 @@ console.log(obj.city);  // prints Eaton bc it's inside the object
 
 /////////////////////////////////////////
 //  Lecture: Passing Functions as arguments
-
+/*
 var years = [1990, 1965, 1937, 2005, 1998];
 
 function arrayCalc(arr, fn) {
@@ -136,11 +136,39 @@ var rates = arrayCalc(ages, maxHeartRate);
 console.log(ages);
 console.log(fullAges);
 console.log(rates);
+*/
 
 
 
 
+////////////////////////////////////////////////////
+// Lecture: Functions returning Functions
 
+function interviewQuestion(job) {
+	if (job === 'designer') {
+		return function(name) { // name is the actual name of the person
+			console.log(name + ', can you please explain what UX design is?');
+		}
+	} else if (job === 'teacher') {
+		return function(name) {
+			console.log('What subject do you teach, ' + name + '?');
+		}
+	} else {
+		return function(name) {
+			console.log('Hello ' + name + '. What do you do?');
+		}
+	}
+}
+
+var teacherQuestion = interviewQuestion('teacher');
+var designerQuestion = interviewQuestion('designer');
+
+teacherQuestion('Ashley');
+designerQuestion('Katie');
+designerQuestion('Jenny');
+
+interviewQuestion('teacher')('Molly'); //another way to do it
+interviewQuestion()('Jimmy'); //for the 'else' response
 
 
 

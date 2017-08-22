@@ -34,6 +34,7 @@ console.log(katie.lastName);
 
 
 
+
 //////////////////////////////////////////////
 // Object.create
 /*
@@ -54,6 +55,7 @@ var jimmy = Object.create(personProto, {
 	job: { value: 'health educator'}
 });
 */
+
 
 
 
@@ -95,6 +97,7 @@ change(age, obj);
 console.log(age);  // prints 21 bc age is a primative and can't be changed
 console.log(obj.city);  // prints Eaton bc it's inside the object
 */
+
 
 
 
@@ -141,6 +144,7 @@ console.log(rates);
 
 
 
+
 ////////////////////////////////////////////////////
 // Lecture: Functions returning Functions
 /*
@@ -179,6 +183,7 @@ interviewQuestion()('Jimmy'); //for the 'else' response
 
 
 
+
 ////////////////////////////////////////////////////
 // Lecture: IIFE (Immediately Invoked Function Expression)
 /*
@@ -209,9 +214,10 @@ game();
 
 
 
+
 ///////////////////////////////////////////////////
 // Lecture: Closures
-
+/*
 function retirement(retirementAge) {
 	return function(yearOfBirth) {
 		var a = ' years left until retirement.';
@@ -264,6 +270,77 @@ function interviewQuestion(job) {
 }
 
 interviewQuestion('teacher')('Molly');
+*/
+
+
+
+
+
+//////////////////////////////////////////////////
+// Lecture: Bind, Call, and Apply
+
+var jenny = {
+	name: 'Jenny',
+	age: 33,
+	job: 'developer',
+	presentation: function(style, timeOfDay) {
+		if (style === 'formal') {
+			console.log('Good ' + timeOfDay + ', Ladies and Gentlemen! I\'m ' + this.name + ', I\'m a ' + this.job + ' and I\'m ' + this.age + ' years old. Have a nice ' + timeOfDay + '.');
+		} else if (style === 'friendly') {
+			console.log('Hey, what\'s up? I\'m ' + this.name + ', I\'m a ' + this.job + ' and I\'m ' + this.age + ' years old. Have a nice ' + timeOfDay + '.');
+		}
+	}
+};
+
+jenny.presentation('formal', 'morning');
+
+var katie = {
+	name: 'Katie',
+	age: 21,
+	job: 'student'
+};
+// Method borrowing: still call the first one, but tell it to replace the 'this' with the second one:
+jenny.presentation.call(katie, 'friendly', 'afternoon');
+
+// won't work here but will need this idea later:
+//jenny.presentation.apply(katie, ['friendly', 'afternoon']);
+
+// setting the style to friendly (but not setting the timeOfDay at all):
+var jennyFriendly = jenny.presentation.bind(jenny, 'friendly'); //bind returns a function
+
+jennyFriendly('evening');
+jennyFriendly('night');
+
+// still have to use jenny after the = bc that's where the function is held above.
+var katieFormal = jenny.presentation.bind(katie, 'formal');
+
+katieFormal('afternoon');
+
+
+
+var years = [1990, 1965, 1937, 2005, 1998];
+
+function arrayCalc(arr, fn) { //(which array, which function)
+	var arrRes = [];
+	for (var i = 0; i < arr.length; i++) { //loop through whatever array I told it to
+		arrRes.push(fn(arr[i]));
+	}
+	return arrRes;
+}
+
+function calculateAge(el) {
+	return 2017 - el;
+}
+
+function isFullAge(limit, el) { // adding in limit bc different countries define Full Age differently
+	return el >= limit;
+}
+
+//using binding on a previous problem:
+var ages = arrayCalc(years, calculateAge);
+var fullJapan = arrayCalc(ages, isFullAge.bind(this, 20)); //(ages array, isFullAge function(binding the full age to age 20))
+console.log(ages);
+console.log(fullJapan);
 
 
 

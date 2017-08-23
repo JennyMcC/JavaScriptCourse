@@ -110,12 +110,23 @@ Question.prototype.displayQuestion = function() {
 	}
 }
 
-Question.prototype.checkAnswer = function(ans) {
+Question.prototype.checkAnswer = function(ans, callback) {
+	var sc;
+
 	if (ans === this.correct) {
 		console.log('Correct Answer!');
+		sc = callback(true);
 	} else {
 		console.log('Wrong answer. Try again.');
+		sc = callback(false);
 	}
+
+	this.displayScore(sc);
+}
+
+Question.prototype.displayScore = function(score) {
+	console.log('Your current score is: ' + score);
+	console.log('---------------------------------');
 }
 
 var q1 = new Question('Is JavaScript the coolest programming language in the world?',
@@ -130,13 +141,36 @@ var q3 = new Question('What word best describes coding?',
 
 var questions = [q1, q2, q3];
 
-var n = Math.floor(Math.random() * questions.length);
+function score() {
+	var sc = 0;
+	return function(correct) {
+		if (correct) {
+			sc++;
+		}
+		return sc;
+	}
+}
+var keepScore = score();
 
-questions[n].displayQuestion();
 
-var answer = parseInt(prompt('Please select the correct answer:'));
+function nextQuestion() {
 
-questions[n].checkAnswer(answer);
+	var n = Math.floor(Math.random() * questions.length);
+
+	questions[n].displayQuestion();
+
+	var answer = prompt('Please select the correct answer:');
+
+	if (answer !== 'exit') {
+
+		questions[n].checkAnswer(parseInt(answer), keepScore);
+
+		nextQuestion();
+	}	
+}	
+
+nextQuestion();
+
 })();
 
 

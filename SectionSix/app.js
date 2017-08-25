@@ -21,15 +21,12 @@ var UIController = (function() {
 	};
 
 	return {
-		
 		getInput: function() {
 			// getting the 3 things the user inputs at the top of the page:
 			return {
-
 				type: document.querySelector(DOMstrings.inputType).value, // will be either inc or exp
 				description: document.querySelector(DOMstrings.inputDescription).value, // value is simply what is entered by user
 				value: document.querySelector(DOMstrings.inputValue).value
-			
 			};
 		},
 		// exposing DOMstrings to the public so other contollers can use them:

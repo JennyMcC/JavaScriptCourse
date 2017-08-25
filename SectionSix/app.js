@@ -46,13 +46,25 @@ var UIController = (function() {
 // GLOBAL APP CONTROLLER
 //another IIFE; calling on the previous ones to connect them:
 var controller = (function(budgetCtrl, UICtrl) {
-	// calling on the DOMstrings so I can use them here:
-	var DOM = UICtrl.getDOMstrings();
+
+	var setupEventListeners = function() {
+		// calling on the DOMstrings so I can use them here:
+		var DOM = UICtrl.getDOMstrings();
+		// now called DOM instead of DOMstrings bc I changed it when I called on it. whyyyyy
+		document.querySelector(DOM.inputBtn).addEventListener('click', ctrlAddItem);
+		// Adding another eventListener for hitting the return key (keypress event) instead of clicking the button:
+		document.addEventListener('keypress', function(event) {
+			// specifying return key (enter's keycode in the console..older browsers use 'which')
+			if (event.keycode === 13 || event.which === 13) {
+				ctrlAddItem();
+			}
+		});
+	};
+
 
 	var ctrlAddItem = function() {
 		// 1. Get the field input data
 		var input = UICtrl.getInput();
-		console.log(input);
 
 		// 2. Add the item to the budget controller
 
@@ -62,23 +74,20 @@ var controller = (function(budgetCtrl, UICtrl) {
 
 		// 5. Display the budget on the UI
 
-	}
-	// now called DOM instead of DOMstrings bc I changed it when I called on it. whyyyyy
-	document.querySelector(DOM.inputBtn).addEventListener('click', ctrlAddItem);
+	};
 
-	// Adding another eventListener for hitting the return key (keypress event) instead of clicking the button:
-	document.addEventListener('keypress', function(event) {
-		// specifying return key (enter's keycode in the console..older browsers use 'which')
-		if (event.keycode === 13 || event.which === 13) {
-			
-			ctrlAddItem();
-
+	// actually calling on the setupEventListeners function so it's public?
+	return {
+		init: function() {
+			console.log('application has started.');
+			setupEventListeners();
 		}
-
-	});
+	};
 
 })(budgetController, UIController);
 
+// need this to make everything happen (calling on the eventListeners)
+controller.init();
 
 
 

@@ -1,8 +1,28 @@
 //IIFE BUDGET CONTROLLER
 var budgetController = (function() {
-//the following is private bc it is in the closure:
-//can only call on it publicly by budgetController.publicTest(b) (this will essentially add b to 23)
-	
+
+	var Expense = function(id, description, value) {
+		this.id = id;
+		this.description = description;
+		this.value = value;
+	};
+
+	var Income = function(id, description, value) {
+		this.id = id;
+		this.description = description;
+		this.value = value;
+	};
+
+	var data = {
+		allItems: {
+			exp: [],
+			inc: []
+		},
+		totals: {
+			exp: 0,
+			inc: 0
+		}
+	};
 
 })();
 
@@ -21,17 +41,17 @@ var UIController = (function() {
 	};
 
 	return {
+		getDOMstrings: function() {
+			return DOMstrings;
+		},
+
 		getInput: function() {
 			// getting the 3 things the user inputs at the top of the page:
 			return {
-				type: document.querySelector(DOMstrings.inputType).value, // will be either inc or exp
+				type: document.querySelector(DOMstrings.inputType).value, // will be either inc. or exp.
 				description: document.querySelector(DOMstrings.inputDescription).value, // value is simply what is entered by user
 				value: document.querySelector(DOMstrings.inputValue).value
 			};
-		},
-		// exposing DOMstrings to the public so other contollers can use them:
-		getDOMstrings: function() {
-			return DOMstrings;
 		}
 	};
 

@@ -101,7 +101,11 @@ var UIController = (function() {
 		inputValue: '.add__value',
 		inputBtn: '.add__btn',
 		incomeContainer: '.income__list',
-		expensesContainter: '.expenses__list'
+		expensesContainter: '.expenses__list',
+		budgetLabel: '.budget__value',
+		incomeLabel: '.budget__income--value',
+		expensesLabel: '.budget__expenses--value',
+		percentageLabel: '.budget__expenses--percentage'
 	};
 
 	return {
@@ -113,7 +117,7 @@ var UIController = (function() {
 				value: parseFloat(document.querySelector(DOMstrings.inputValue).value) // parseFloat will convert this from a string to a number so we can add with it later.
 			};
 		},
-
+		// getting input to display on the bottom of the page:
 		addListItem: function(obj, type) {
 			var html, newHtml, element;
 			// Create HTML string with placeholder text:
@@ -146,6 +150,18 @@ var UIController = (function() {
 			// setting the curser to be back on the first field (using focus..focus on the first field in the array):
 			fieldsArr[0].focus();
 		},
+		// Getting the numbers to display on the top portion of the page:
+		displayBudget: function(obj) {
+			document.querySelector(DOMstrings.budgetLabel).textContent = obj.budget;
+			document.querySelector(DOMstrings.incomeLabel).textContent = obj.totalInc;
+			document.querySelector(DOMstrings.expensesLabel).textContent = obj.totalExp;
+			// only display percentage if it's > 0:
+			if (obj.percentage > 0) {
+				document.querySelector(DOMstrings.percentageLabel).textContent = obj.percentage + '%';
+			} else {
+				document.querySelector(DOMstrings.percentageLabel).textContent = '---';
+			}
+		},
 
 		getDOMstrings: function() {
 			return DOMstrings;
@@ -175,16 +191,14 @@ var controller = (function(budgetCtrl, UICtrl) {
 		});
 	};
 
-
 	var updateBudget = function() {
 		// 1. Calculate the budget
 		budgetCtrl.calculateBudget();
 		// 2. return the budget
 		var budget = budgetCtrl.getBudget();
 		// 3. Display the budget on the UI
-		console.log(budget);
+		UICtrl.displayBudget(budget);
 	};
-
 
 	var ctrlAddItem = function() {
 		var input, newItem;
@@ -204,19 +218,22 @@ var controller = (function(budgetCtrl, UICtrl) {
 			// 5. Calculate and update budget:
 			updateBudget();
 		}
-
 	};
-
 	// actually calling on the setupEventListeners function so it's public?
 	return {
 		init: function() {
 			console.log('application has started.');
+			UICtrl.displayBudget({
+				budget: 0,
+				totalInc: 0,
+				totalExp: 0,
+				percentage: -1
+			});
 			setupEventListeners();
 		}
 	};
 
 })(budgetController, UIController);
-
 // need this to make everything happen (calling on the eventListeners)
 controller.init();
 

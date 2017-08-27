@@ -1,4 +1,5 @@
-//IIFE BUDGET CONTROLLER
+// BUDGET CONTROLLER
+// IIFE
 var budgetController = (function() {
 
 	var Expense = function(id, description, value) {
@@ -13,6 +14,14 @@ var budgetController = (function() {
 		this.value = value;
 	};
 
+	var calculateTotal = function(type) {
+		var sum = 0;
+		data.allItems[type].forEach(function(cur) {
+			sum += cur.value;
+		});
+		data.totals[type] = sum;
+	};
+
 	var data = {
 		allItems: {
 			exp: [],
@@ -21,7 +30,9 @@ var budgetController = (function() {
 		totals: {
 			exp: 0,
 			inc: 0
-		}
+		},
+		budget: 0,
+		percentage: -1 // -1 basically means nonexistant (which the percentage would be starting out)
 	};
 
 	return {
@@ -48,6 +59,29 @@ var budgetController = (function() {
 			return newItem;
 		},
 
+		calculateBudget: function() {
+			// calculate total income and expenses
+			calculateTotal('exp');
+			calculateTotal('inc');
+			// calculate the budget: income - expenses
+			data.budget = data.totals.inc - data.totals.exp;
+			// calculate the percentage of income that we spent
+			if (data.totals.inc > 0) {
+				data.percentage = Math.round((data.totals.exp / data.totals.inc) * 100);
+			} else {
+				data.percentage = -1; // if the income is not > 0 then set the percentage to nonexistant.
+			}
+		},
+
+		getBudget: function() {
+			return {
+				budget: data.budget,
+				totalInc: data.totals.inc,
+				totalExp: data.totals.exp,
+				percentage: data.percentage
+			}
+		},
+
 		testing: function() {
 			console.log(data);		}
 	};
@@ -71,14 +105,12 @@ var UIController = (function() {
 	};
 
 	return {
-
 		getInput: function() {
 			// getting the 3 things the user inputs at the top of the page:
 			return {
 				type: document.querySelector(DOMstrings.inputType).value, // will be either inc. or exp.
 				description: document.querySelector(DOMstrings.inputDescription).value, // value is simply what is entered by user
-				value: parseFloat(document.querySelector(DOMstrings.inputValue).value)
-				// parseFloat will convert this from a string to a number so we can add with it later.
+				value: parseFloat(document.querySelector(DOMstrings.inputValue).value) // parseFloat will convert this from a string to a number so we can add with it later.
 			};
 		},
 
@@ -88,19 +120,15 @@ var UIController = (function() {
 			// replace generic criteria with %id%, %description% and %value%:
 			if (type === 'inc') {
 				element = DOMstrings.incomeContainer;
-
-			html = '<div class="item clearfix" id="income-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>';
+				html = '<div class="item clearfix" id="income-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>';
 			} else if (type === 'exp') {
 				element = DOMstrings.expensesContainter;
-
-			 html = '<div class="item clearfix" id="expense-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__percentage">21%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>';
+				html = '<div class="item clearfix" id="expense-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__percentage">21%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>';
 			}
-
 			// Replace the placeholder text with some actual data (have to put 'newHtml' the 2nd and 3rd time so it doesn't revert back)
 			newHtml = html.replace('%id%', obj.id);
 			newHtml = newHtml.replace('%description%', obj.description);
 			newHtml = newHtml.replace('%value%', obj.value);
-
 			// Insert the HTML into the DOM
 			document.querySelector(element).insertAdjacentHTML('beforeend', newHtml);
 		},
@@ -117,7 +145,6 @@ var UIController = (function() {
 			});
 			// setting the curser to be back on the first field (using focus..focus on the first field in the array):
 			fieldsArr[0].focus();
-
 		},
 
 		getDOMstrings: function() {
@@ -150,13 +177,12 @@ var controller = (function(budgetCtrl, UICtrl) {
 
 
 	var updateBudget = function() {
-
 		// 1. Calculate the budget
-
+		budgetCtrl.calculateBudget();
 		// 2. return the budget
-
+		var budget = budgetCtrl.getBudget();
 		// 3. Display the budget on the UI
-
+		console.log(budget);
 	};
 
 

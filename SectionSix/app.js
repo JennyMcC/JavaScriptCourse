@@ -153,6 +153,11 @@ var UIController = (function() {
 			// Insert the HTML into the DOM
 			document.querySelector(element).insertAdjacentHTML('beforeend', newHtml);
 		},
+		//actually deleting things from the list when user clicks button:
+		deleteListItem: function(selectorID) {
+			var el = document.getElementById(selectorID);
+			el.parentNode.removeChild(el);
+		},
 
 		clearFields: function() {
 			var fields, fieldsArr;
@@ -251,8 +256,9 @@ var controller = (function(budgetCtrl, UICtrl) {
 			// 1. delete the item from the data structure
 			budgetCtrl.deleteItem(type, ID);
 			// 2. delete the item from the user interface
-
+			UICtrl.deleteListItem(itemID);
 			// 3. update and show the new budget(at top)
+			updateBudget();
 		}
 	};
 	// actually calling on the setupEventListeners function so it's public?

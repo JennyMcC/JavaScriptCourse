@@ -59,6 +59,22 @@ var budgetController = (function() {
 			return newItem;
 		},
 
+		deleteItem: function(type, id) {
+			var ids, index;
+			//id = 6
+			//data.allItems[type][id]; won't work bc in the array 6 is index 3.
+			//ids = [1 2 4 6 8]
+			ids = data.allItems[type].map(function(current) {
+				return current.id;
+			});
+
+			index = ids.indexOf(id);
+
+			if (index !== -1) {
+				data.allItems[type].splice(index, 1); // will remove 1 element at the index named
+			}
+		},
+
 		calculateBudget: function() {
 			// calculate total income and expenses
 			calculateTotal('exp');
@@ -231,10 +247,9 @@ var controller = (function(budgetCtrl, UICtrl) {
 			//inc-1
 			splitID = itemID.split('-');
 			type = splitID[0];
-			ID = splitID[1];
-
+			ID = parseInt(splitID[1]); //converting the string to a number
 			// 1. delete the item from the data structure
-
+			budgetCtrl.deleteItem(type, ID);
 			// 2. delete the item from the user interface
 
 			// 3. update and show the new budget(at top)

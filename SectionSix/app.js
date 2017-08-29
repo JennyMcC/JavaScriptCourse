@@ -105,7 +105,8 @@ var UIController = (function() {
 		budgetLabel: '.budget__value',
 		incomeLabel: '.budget__income--value',
 		expensesLabel: '.budget__expenses--value',
-		percentageLabel: '.budget__expenses--percentage'
+		percentageLabel: '.budget__expenses--percentage',
+		container: '.container'
 	};
 
 	return {
@@ -189,6 +190,8 @@ var controller = (function(budgetCtrl, UICtrl) {
 				ctrlAddItem();
 			}
 		});
+		// when user clicks delete, do ctrlDeleteItem function:
+		document.querySelector(DOM.container).addEventListener('click', ctrlDeleteItem);
 	};
 
 	var updateBudget = function() {
@@ -218,6 +221,12 @@ var controller = (function(budgetCtrl, UICtrl) {
 			// 5. Calculate and update budget:
 			updateBudget();
 		}
+	};
+	// making the delete buttons work:
+	var ctrlDeleteItem = function(event) {
+		var itemID;
+
+		itemID = event.target.parentNode.parentNode.parentNode.parentNode.id; // parentNode moves me up in the div's above the delete button div(html). I wanted to be above all the div's containing information so that I could delete it all when the user presses the delete button. It was 4 div's above the button to get to the div containing all the inc and exp lists.
 	};
 	// actually calling on the setupEventListeners function so it's public?
 	return {

@@ -125,10 +125,10 @@ var UIController = (function() {
 			// replace generic criteria with %id%, %description% and %value%:
 			if (type === 'inc') {
 				element = DOMstrings.incomeContainer;
-				html = '<div class="item clearfix" id="income-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>';
+				html = '<div class="item clearfix" id="inc-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>';
 			} else if (type === 'exp') {
 				element = DOMstrings.expensesContainter;
-				html = '<div class="item clearfix" id="expense-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__percentage">21%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>';
+				html = '<div class="item clearfix" id="exp-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__percentage">21%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>';
 			}
 			// Replace the placeholder text with some actual data (have to put 'newHtml' the 2nd and 3rd time so it doesn't revert back)
 			newHtml = html.replace('%id%', obj.id);
@@ -224,9 +224,21 @@ var controller = (function(budgetCtrl, UICtrl) {
 	};
 	// making the delete buttons work:
 	var ctrlDeleteItem = function(event) {
-		var itemID;
+		var itemID, splitID, type, ID;
 
 		itemID = event.target.parentNode.parentNode.parentNode.parentNode.id; // parentNode moves me up in the div's above the delete button div(html). I wanted to be above all the div's containing information so that I could delete it all when the user presses the delete button. It was 4 div's above the button to get to the div containing all the inc and exp lists.
+		if (itemID) {
+			//inc-1
+			splitID = itemID.split('-');
+			type = splitID[0];
+			ID = splitID[1];
+
+			// 1. delete the item from the data structure
+
+			// 2. delete the item from the user interface
+
+			// 3. update and show the new budget(at top)
+		}
 	};
 	// actually calling on the setupEventListeners function so it's public?
 	return {

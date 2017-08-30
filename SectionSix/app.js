@@ -133,7 +133,7 @@ var budgetController = (function() {
 
 
 
-// UI CONTROLLER
+// UI CONTROLLER (private functions?)
 //another IIFE (to separate this code from the last code)
 var UIController = (function() {
 	// storing class names from HTML so if one changes, I don't have to change it throughout the JS code:
@@ -151,6 +151,27 @@ var UIController = (function() {
 		container: '.container',
 		expensesPercLabel: '.item__percentage'
 	};
+
+	// need to call on the number and the type bc it will either be a '+' or a '-':
+		var formatNumber = function(num, type) {
+			var numSplit, int, dec;
+			//overriding the first 'num' and replacing it will the new absolute 'num':
+			num = Math.abs(num);
+			num = num.toFixed(2); //toFixed() is FIXING it to 2 decimal points
+			//splitting the num into 2 parts; the dollars and the cents
+			numSplit = num.split('.');
+			int = numSplit[0]; //the dollars
+			//inserting a comma in the dollars:
+			if (int.length > 3) {
+				int = int.substr(0, int.length - 3) + ',' + int.substr(int.length - 3, 3);//starting on the first number [0] and going to the beginning and subtracting 3 places to insert the comma (3 places from the end.) and then starting at the comma and counting 3 more spaces to add another comma, if needed.
+
+			}
+
+			dec = numSplit[1]; //the cents
+			//if, then to put a + or - in front of things:
+			return (type === 'exp' ? '-' : '+') + ' ' + int + '.' + dec;
+
+		};
 
 	return {
 		getInput: function() {
@@ -176,7 +197,7 @@ var UIController = (function() {
 			// Replace the placeholder text with some actual data (have to put 'newHtml' the 2nd and 3rd time so it doesn't revert back)
 			newHtml = html.replace('%id%', obj.id);
 			newHtml = newHtml.replace('%description%', obj.description);
-			newHtml = newHtml.replace('%value%', obj.value);
+			newHtml = newHtml.replace('%value%', formatNumber(obj.value, type));
 			// Insert the HTML into the DOM
 			document.querySelector(element).insertAdjacentHTML('beforeend', newHtml);
 		},
@@ -201,9 +222,11 @@ var UIController = (function() {
 		},
 		// Getting the numbers to display on the top portion of the page:
 		displayBudget: function(obj) {
-			document.querySelector(DOMstrings.budgetLabel).textContent = obj.budget;
-			document.querySelector(DOMstrings.incomeLabel).textContent = obj.totalInc;
-			document.querySelector(DOMstrings.expensesLabel).textContent = obj.totalExp;
+			obj.budget > 0 ? type = 'inc' : type = 'exp';
+
+			document.querySelector(DOMstrings.budgetLabel).textContent = formatNumber(obj.budget, type);
+			document.querySelector(DOMstrings.incomeLabel).textContent = formatNumber(obj.totalInc, 'inc');
+			document.querySelector(DOMstrings.expensesLabel).textContent = formatNumber(obj.totalExp, 'exp');
 			// only display percentage if it's > 0:
 			if (obj.percentage > 0) {
 				document.querySelector(DOMstrings.percentageLabel).textContent = obj.percentage + '%';

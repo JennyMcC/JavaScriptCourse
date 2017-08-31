@@ -152,7 +152,6 @@ var UIController = (function() {
 		expensesPercLabel: '.item__percentage',
 		dateLabel: '.budget__title--month'
 	};
-
 	// need to call on the number and the type bc it will either be a '+' or a '-':
 		var formatNumber = function(num, type) {
 			var numSplit, int, dec;
@@ -170,8 +169,13 @@ var UIController = (function() {
 
 			dec = numSplit[1]; //the cents
 			//if, then to put a + or - in front of things:
-			return (type === 'exp' ? '-' : '+') + ' ' + int + '.' + dec;
+			return (type === 'exp' ? '-' : '+') + ' ' + '$' + int + '.' + dec;
+		};
 
+		var nodeListForEach = function(list, callback) {
+			for (var i = 0; i < list.length; i++) {
+				callback(list[i], i);
+			}
 		};
 
 	return {
@@ -238,11 +242,6 @@ var UIController = (function() {
 
 		displayPercentages: function(percentages) {
 			var fields = document.querySelectorAll(DOMstrings.expensesPercLabel); //qSALL gets everything under that name, not just the first one (which is what regular querySelector does)
-			var nodeListForEach = function(list, callback) {
-				for (var i = 0; i < list.length; i++) {
-					callback(list[i], i);
-				}
-			};
 			nodeListForEach(fields, function(current, index) {
 				if (percentages[index] > 0) {
 					current.textContent = percentages[index] + '%';
@@ -260,6 +259,19 @@ var UIController = (function() {
 			month = now.getMonth(); //returns current month
 			year = now.getFullYear(); //returns current year (in full)
 			document.querySelector(DOMstrings.dateLabel).textContent = months[month] + ' ' + year;
+		},
+		// where we wanted to change the border colors (red or blue)
+		changedType: function() {
+			var fields = document.querySelectorAll(
+				DOMstrings.inputType + ',' +
+				DOMstrings.inputDescription + ',' +
+				DOMstrings.inputValue);
+
+			nodeListForEach(fields, function(cur) {
+				cur.classList.toggle('red-focus');
+			});
+
+			document.querySelector(DOMstrings.inputBtn).classList.toggle('red');
 		},
 
 		getDOMstrings: function() {
@@ -290,6 +302,8 @@ var controller = (function(budgetCtrl, UICtrl) {
 		});
 		// when user clicks delete, do ctrlDeleteItem function:
 		document.querySelector(DOM.container).addEventListener('click', ctrlDeleteItem);
+		// changing the border color of the input fields (blue or red)
+		document.querySelector(DOM.inputType).addEventListener('change', UICtrl.changedType);
 	};
 
 	var updateBudget = function() {

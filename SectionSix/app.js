@@ -125,10 +125,12 @@ var budgetController = (function() {
 		},
 
 		testing: function() {
-			console.log(data);		}
+			console.log(data);
+		}
 	};
 
 })();
+
 
 
 
@@ -152,7 +154,7 @@ var UIController = (function() {
 		expensesPercLabel: '.item__percentage',
 		dateLabel: '.budget__title--month'
 	};
-	// need to call on the number and the type bc it will either be a '+' or a '-':
+		// need to call on the number and the type bc it will either be a '+' or a '-':
 		var formatNumber = function(num, type) {
 			var numSplit, int, dec;
 			//overriding the first 'num' and replacing it will the new absolute 'num':
@@ -280,6 +282,7 @@ var UIController = (function() {
 	};
 
 })();
+
 
 
 

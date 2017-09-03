@@ -46,7 +46,7 @@ driversLicense6(true); // this will not print bc the console.log has to be withi
 
 
 
-
+/*
 // ES5
 var i = 23;
 
@@ -64,4 +64,43 @@ for (let i = 0; i < 5; i++) {
 	console.log(i); // prints 0-5
 }
 console.log(i); // prints 23
+*/
+
+
+
+
+
+///////////////////////////////////////////////////////////////
+// Lecture: Blocks and IIFEs (making variables private)
+
+// ES6
+{
+	const a = 1;
+	let b = 2;
+	var c = 3;
+}
+
+console.log(a + b); // this will not print bc it needs to be inside the function
+console.log(c); // this will print bc with var it doesn't matter that it's declared inside the function
+
+
+// ES5
+(function() {
+	var c = 3;
+});
+
+console.log(c); // won't print (old way of making things private)
+
+
+
+
+
+
+
+
+
+
+
+
+
 

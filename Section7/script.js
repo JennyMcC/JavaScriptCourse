@@ -72,7 +72,7 @@ console.log(i); // prints 23
 
 ///////////////////////////////////////////////////////////////
 // Lecture: Blocks and IIFEs (making variables private)
-
+/*
 // ES6
 {
 	const a = 1;
@@ -90,12 +90,36 @@ console.log(c); // this will print bc with var it doesn't matter that it's decla
 });
 
 console.log(c); // won't print (old way of making things private)
+*/
 
 
 
 
+////////////////////////////////////////////////////////////////
+// Lecture: Strings
+
+let firstName = 'Jenny';
+let lastName = 'McCargish';
+const yearOfBirth = 1984;
+function calcAge(year) {
+	return 2017 - year;
+}
 
 
+// ES5
+console.log('This is ' + firstName + ' ' + lastName + '. She was born in ' + yearOfBirth + '. Today, she is ' + calcAge(yearOfBirth) + ' years old.');
+
+
+// ES6
+console.log(`This is ${firstName} ${lastName}. She was born in ${yearOfBirth}. Today, she is ${calcAge(yearOfBirth)} years old.`);
+
+
+const n = `${firstName} ${lastName}`;
+console.log(n.startsWith('J')); // if it were a lowercase j, it would say false.
+console.log(n.endsWith('h'));
+console.log(n.includes('cC'));
+console.log(firstName.repeat(5));
+console.log(`${firstName} `.repeat(5)); // to add a space
 
 
 

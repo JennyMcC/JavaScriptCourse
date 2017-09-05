@@ -154,3 +154,97 @@ console.log(ages6);
 
 
 
+////////////////////////////////////////////////////////////////////////
+// Lecture: Arrow Functions 2
+
+// ES5
+var box5 = {
+	color: 'green',
+	position: 1,
+	clickMe: function() {
+		var self = this; // this is a hack in order to be able to call on the color and position below bc this. wouldn't work
+		document.querySelector('.green').addEventListener('click', function() {
+			var str = 'This is box number ' + self.position + ' and it is ' + self.color;
+			alert(str);
+		});
+	}
+}
+box5.clickMe();
+
+
+// ES6
+const box6 = {
+	color: 'blue',
+	position: 1,
+	clickMe: function() {
+		document.querySelector('.blue').addEventListener('click', () => {
+			var str = 'This is box number ' + this.position + ' and it is ' + this.color;
+			alert(str);
+		});
+	}
+}
+box6.clickMe();
+
+
+
+
+const box66 = {
+	color: 'blue',
+	position: 1,
+	clickMe: () => { //using the arrow here will basically do the same thing as ES5, we can't use this. below. It is undefined.
+
+		document.querySelector('.blue').addEventListener('click', () => {
+			var str = 'This is box number ' + this.position + ' and it is ' + this.color;
+			alert(str);
+		});
+	}
+}
+//box66.clickMe();
+
+
+
+
+
+function Person(name) {
+	this.name = name;
+}
+
+// ES5
+Person.prototype.myFriends5 = function(friends) {
+
+	var arr = friends.map(function(el) {
+		return this.name + ' is friends with ' + el;
+	}.bind(this)); // .bind is another way to be able to use this. in a function within a function
+
+	//console.log(arr);
+}
+ var friends = ['Shelly', 'Nick', 'Laura'];
+ new Person('Jenny').myFriends5(friends);
+
+
+
+
+// ES6
+Person.prototype.myFriends6 = function(friends) {
+
+	var arr = friends.map(el => `${this.name} is friends with ${el}`);
+
+	console.log(arr);
+}
+new Person('Mike').myFriends6(friends);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

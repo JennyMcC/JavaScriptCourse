@@ -156,7 +156,7 @@ console.log(ages6);
 
 ////////////////////////////////////////////////////////////////////////
 // Lecture: Arrow Functions 2
-
+/*
 // ES5
 var box5 = {
 	color: 'green',
@@ -199,8 +199,8 @@ const box66 = {
 		});
 	}
 }
-//box66.clickMe();
-
+box66.clickMe();
+*/
 
 
 
@@ -282,6 +282,75 @@ console.log(retirement);
 
 
 
+
+/////////////////////////////////////////////////////////////////
+// Lecture: Arrays
+
+const boxes = document.querySelectorAll('.box');
+
+// Changing the color of all the boxes to 'dodgerblue'
+
+// ES5
+
+var boxesArr5 = Array.prototype.slice.call(boxes);
+boxesArr5.forEach(function(cur) {
+	cur.style.backgroundColor = 'dodgerblue';
+});
+
+
+
+// ES6
+
+Array.from(boxes).forEach(cur => cur.style.backgroundColor = 'dodgerblue');
+
+
+
+
+// Loops
+
+// ES5
+/*
+for(var i = 0; i < boxesArr5.length; i++) {
+
+	if(boxesArr5[i].className === 'box blue') {
+
+		continue; // keep going if it's already blue (past the 2nd button)
+	}
+
+	boxesArr5[i].textContent = 'I changed to blue!';
+}
+*/
+
+
+
+// ES6 (for off loop)
+
+const boxesArr6 = Array.from(boxes);
+
+for (const cur of boxesArr6) {
+	if (cur.className.includes('blue')) {
+		continue;
+	}
+	cur.textContent = 'I changed to blue!';
+}
+
+
+
+
+// ES5
+var ages = [12, 17, 8, 21, 14, 11];
+
+var full = ages.map(function(cur) {
+	return cur >= 18;
+});
+console.log(full); // true or false
+console.log(full.indexOf(true)); // what index is above 18
+console.log(ages[full.indexOf(true)]); // what is the age that is above 18
+
+
+// ES6
+console.log(ages.findIndex(cur => cur >= 18)); // what index is above 18
+console.log(ages.find(cur => cur >= 18)); // what is the age that is above 18
 
 
 

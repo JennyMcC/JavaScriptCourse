@@ -357,6 +357,50 @@ console.log(ages.find(cur => cur >= 18)); // what is the age that is above 18
 
 
 
+////////////////////////////////////////////////////////////////
+// Lecture: Spread Operator
+
+function addFourAges (a, b, c, d) {
+	return a + b + c + d;
+}
+
+var sum1 = addFourAges(18, 30, 12, 21);
+console.log(sum1);
+
+
+// ES5
+var ages = [18, 30, 12, 21];
+var sum2 = addFourAges.apply(null, ages);
+console.log(sum2);
+
+
+// ES6
+const sum3 = addFourAges(...ages);  //same as sum2 above
+console.log(sum3);
+
+
+const familyMcCargish = ['Jenny', 'Jimmy', 'Katie'];
+const familyBowser = ['Max', 'Alex', 'Kasey', 'Lew'];
+//const bigFamily = [...familyMcCargish, ...familyBowser]; // putting them together
+//console.log(bigFamily);
+// can add a new element as well:
+const bigFamily = [...familyMcCargish, 'Lucas', ...familyBowser];
+console.log(bigFamily);
+
+
+
+// Changing the wording in the boxes to purple
+const h = document.querySelector('h1'); //don't need . when not calling on a class or id
+const boxes2 = document.querySelectorAll('.box');
+const all = [h, ...boxes2]; //don't need the ... for h bc its not qsALL
+
+Array.from(all).forEach(cur => cur.style.color = 'purple');
+
+
+
+
+
+
 
 
 

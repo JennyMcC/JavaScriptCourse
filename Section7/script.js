@@ -97,7 +97,7 @@ console.log(c); // won't print (old way of making things private)
 
 ////////////////////////////////////////////////////////////////
 // Lecture: Strings
-
+/*
 let firstName = 'Jenny';
 let lastName = 'McCargish';
 const yearOfBirth = 1984;
@@ -120,7 +120,7 @@ console.log(n.endsWith('h'));
 console.log(n.includes('cC'));
 console.log(firstName.repeat(5));
 console.log(`${firstName} `.repeat(5)); // to add a space
-
+*/
 
 
 
@@ -233,6 +233,49 @@ Person.prototype.myFriends6 = function(friends) {
 }
 new Person('Mike').myFriends6(friends);
 
+
+
+
+
+////////////////////////////////////////////////////////////////////
+// Lecture: Deconstructing
+
+// ES5
+var jenny = ['Jenny', 33];
+//var name = jenny[0];
+//var age = jenny[1];
+
+
+// ES6
+const [name, age] = ['Jenny', 33];
+console.log(name);
+console.log(age);
+
+const obj = {
+	firstName: 'Jenny',
+	lastName: 'McCargish'
+};
+
+const {firstName, lastName} = obj;
+console.log(firstName);
+console.log(lastName);
+
+const {firstName: a, lastName: b} = obj;
+console.log(a);
+console.log(b);
+
+
+
+
+function calcAgeRetirement(year) {
+	const age = new Date().getFullYear() - year;
+	return [age, 65 - age];
+}
+
+
+const [age2, retirement] = calcAgeRetirement(1990);
+console.log(age2);
+console.log(retirement);
 
 
 

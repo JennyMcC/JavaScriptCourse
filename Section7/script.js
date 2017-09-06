@@ -18,6 +18,7 @@ console.log(name6);  // will print an error bc we can't change consts
 
 
 // ES5
+/*
 function driversLicense5(passedTest) {
 	if (passedTest) {
 		var firstName = 'John';
@@ -42,7 +43,7 @@ function driversLicense6(passedTest) {
 }
 driversLicense6(true); // this will not print bc the console.log has to be within the if statement. Moving it into the if statement will make it work.
 // OR to make it work I can actually define the const outside of the block and just declare the let.
-
+*/
 
 
 
@@ -127,7 +128,7 @@ console.log(`${firstName} `.repeat(5)); // to add a space
 
 //////////////////////////////////////////////////////////////////
 // Lecture: Arrow Functions
-
+/*
 const years = [1990, 1965, 1982, 1937];
 
 // ES5
@@ -149,7 +150,7 @@ ages6 = years.map((el, index) => {
 	return `Age element ${index + 1}: ${age}.`
 });
 console.log(ages6);
-
+*/
 
 
 
@@ -204,7 +205,7 @@ box66.clickMe();
 
 
 
-
+/*
 function Person(name) {
 	this.name = name;
 }
@@ -232,14 +233,14 @@ Person.prototype.myFriends6 = function(friends) {
 	console.log(arr);
 }
 new Person('Mike').myFriends6(friends);
-
+*/
 
 
 
 
 ////////////////////////////////////////////////////////////////////
 // Lecture: Deconstructing
-
+/*
 // ES5
 var jenny = ['Jenny', 33];
 //var name = jenny[0];
@@ -276,7 +277,7 @@ function calcAgeRetirement(year) {
 const [age2, retirement] = calcAgeRetirement(1990);
 console.log(age2);
 console.log(retirement);
-
+*/
 
 
 
@@ -285,7 +286,7 @@ console.log(retirement);
 
 /////////////////////////////////////////////////////////////////
 // Lecture: Arrays
-
+/*
 const boxes = document.querySelectorAll('.box');
 
 // Changing the color of all the boxes to 'dodgerblue'
@@ -324,7 +325,7 @@ for(var i = 0; i < boxesArr5.length; i++) {
 
 
 // ES6 (for off loop)
-
+/*
 const boxesArr6 = Array.from(boxes);
 
 for (const cur of boxesArr6) {
@@ -351,7 +352,7 @@ console.log(ages[full.indexOf(true)]); // what is the age that is above 18
 // ES6
 console.log(ages.findIndex(cur => cur >= 18)); // what index is above 18
 console.log(ages.find(cur => cur >= 18)); // what is the age that is above 18
-
+*/
 
 
 
@@ -359,7 +360,7 @@ console.log(ages.find(cur => cur >= 18)); // what is the age that is above 18
 
 ////////////////////////////////////////////////////////////////
 // Lecture: Spread Operator
-
+/*
 function addFourAges (a, b, c, d) {
 	return a + b + c + d;
 }
@@ -395,14 +396,14 @@ const boxes2 = document.querySelectorAll('.box');
 const all = [h, ...boxes2]; //don't need the ... for h bc its not qsALL
 
 Array.from(all).forEach(cur => cur.style.color = 'purple');
-
+*/
 
 
 
 
 
 ////////////////////////////////////////////////////////////////////
-// Lecture: Rest parameters
+// Lecture: Rest Parameters
 /*
 // ES5
 function isFullAge5() {
@@ -429,7 +430,7 @@ isFullAge6(1990, 1999, 1965, 2016, 1987);
 
 
 
-
+/*
 // ES5
 function isFullAge5(limit) {
 	var argsArr = Array.prototype.slice.call(arguments, 1); //will start slicing at position 1 so that it count the limit(21) as a year
@@ -451,6 +452,58 @@ function isFullAge6(limit, ...years) {
 
 isFullAge6(21, 1990, 1999, 1965);
 isFullAge6(1990, 1999, 1965, 2016, 1987);
+*/
+
+
+
+
+
+
+///////////////////////////////////////////////////////////////////////
+// Lecture: Default Parameters
+
+// ES5
+/*
+function McCargishPerson(firstName, yearOfBirth, lastName, nationality) {
+	// if lastName is undefined then lastName = McCargish, else lastName = whatever was entered.
+	lastName === undefined ? lastName = 'McCargish' : lastName;
+	nationality === undefined ? nationality = 'American' : nationality;
+
+	this.firstName = firstName;
+	this. yearOfBirth = yearOfBirth;
+	this.lastName = lastName;
+	this.nationality = nationality;
+}
+
+var jenny = new McCargishPerson('Jenny', 1984);
+var katie = new McCargishPerson('Katie', 1996);
+var amy = new McCargishPerson('Amy', 1970, 'Bowser');
+*/
+
+
+
+// ES6
+
+function McCargishPerson(firstName, yearOfBirth, lastName = 'McCargish', nationality = 'American') {
+
+	this.firstName = firstName;
+	this. yearOfBirth = yearOfBirth;
+	this.lastName = lastName;
+	this.nationality = nationality;
+}
+
+var jenny = new McCargishPerson('Jenny', 1984);
+var katie = new McCargishPerson('Katie', 1996);
+var amy = new McCargishPerson('Amy', 1970, 'Bowser');
+
+
+
+
+
+
+
+
+
 
 
 
